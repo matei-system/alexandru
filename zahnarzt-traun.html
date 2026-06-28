@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Dana Alexandru · Zahnärztin in Traun</title>
+<meta name="description" content="Ihre Zahnärztin in Traun. Alle Kassen & Privat. Angstpatienten willkommen. Weidfeldstraße 51, 4050 Traun. Tel: +43 7229 61999.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:     #0B2545;
+  --navy-md:  #163866;
+  --blue-lt:  #E8F4FD;
+  --blue-mid: #B8D9F0;
+  --teal:     #1A8FBF;
+  --white:    #FFFFFF;
+  --off:      #F7FAFC;
+  --gray:     #6B7B8D;
+  --gray-lt:  #E4EBF0;
+  --ink:      #0D1B2A;
+  --gold:     #C9A96E;
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--white);
+  overflow-x: hidden;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 5vw;
+  transition: background 0.4s, box-shadow 0.4s;
+}
+nav.scrolled {
+  background: rgba(255,255,255,0.97);
+  box-shadow: 0 1px 0 var(--gray-lt);
+  backdrop-filter: blur(8px);
+}
+.nav-logo { text-decoration: none; display: flex; flex-direction: column; }
+.nav-logo-name {
+  font-size: 0.95rem; font-weight: 700;
+  color: var(--navy); letter-spacing: -0.01em; line-height: 1;
+}
+.nav-logo-title {
+  font-size: 0.6rem; font-weight: 400;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gray); margin-top: 2px;
+}
+.nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 0.82rem; font-weight: 500; color: var(--gray);
+  text-decoration: none; transition: color 0.25s;
+}
+.nav-links a:hover { color: var(--navy); }
+.nav-tel {
+  background: var(--navy) !important;
+  color: var(--white) !important;
+  padding: 0.55rem 1.3rem;
+  border-radius: 50px;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  transition: background 0.25s !important;
+  white-space: nowrap;
+}
+.nav-tel:hover { background: var(--navy-md) !important; }
+.nav-hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; }
+.nav-hamburger span { width: 20px; height: 1.5px; background: var(--navy); border-radius: 2px; display: block; transition: 0.3s; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background: var(--navy);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Subtle dot grid */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+.hero-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 9rem 4vw 5rem 5vw;
+  position: relative; z-index: 2;
+}
+
+.hero-kasse {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 50px;
+  padding: 0.35rem 1rem;
+  margin-bottom: 2.5rem;
+  width: fit-content;
+  opacity: 0; animation: up 0.8s ease forwards 0.2s;
+}
+.hero-kasse-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ADE80; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+.hero-kasse span { font-size: 0.7rem; font-weight: 500; color: rgba(255,255,255,0.75); letter-spacing: 0.06em; }
+
+.hero-title {
+  font-size: clamp(2.8rem, 5.5vw, 5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: up 0.9s ease forwards 0.4s;
+}
+.hero-title .hl { color: #7DD3FC; }
+
+.hero-sub {
+  font-size: 1rem; font-weight: 300;
+  color: rgba(255,255,255,0.6);
+  max-width: 440px; line-height: 1.8;
+  margin-bottom: 3rem;
+  opacity: 0; animation: up 0.9s ease forwards 0.6s;
+}
+
+.hero-actions {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  opacity: 0; animation: up 0.9s ease forwards 0.8s;
+}
+.btn-white {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.85rem 1.8rem;
+  background: var(--white);
+  color: var(--navy);
+  font-size: 0.85rem; font-weight: 600;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
+}
+.btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,255,255,0.2); }
+.btn-ghost-wt {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.85rem 1.8rem;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.85);
+  font-size: 0.85rem; font-weight: 500;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+.btn-ghost-wt:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.06); }
+
+.hero-right {
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  padding: 9rem 5vw 5rem 2vw;
+}
+
+/* Tooth SVG animation */
+.tooth-wrap {
+  position: relative;
+  opacity: 0; animation: fadeIn 1.2s ease forwards 0.8s;
+}
+.tooth-svg { width: clamp(200px, 28vw, 340px); filter: drop-shadow(0 20px 60px rgba(11,37,69,0.5)); }
+
+/* Draw-on animation for tooth outline */
+.tooth-path {
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: drawTooth 2s cubic-bezier(0.4,0,0.2,1) forwards 1s;
+}
+@keyframes drawTooth {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Floating info cards */
+.tooth-card {
+  position: absolute;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 0.9rem 1.2rem;
+  box-shadow: 0 8px 32px rgba(11,37,69,0.2);
+  white-space: nowrap;
+  animation: cardFloat 4s ease-in-out infinite;
+}
+.tooth-card-val { font-size: 1.1rem; font-weight: 700; color: var(--navy); line-height: 1; }
+.tooth-card-label { font-size: 0.65rem; font-weight: 500; color: var(--gray); letter-spacing: 0.05em; margin-top: 2px; }
+.tooth-card.c1 { top: 18%; right: -2rem; animation-delay: 0s; opacity: 0; animation: cardIn 0.6s ease forwards 1.6s, cardFloat 4s ease-in-out 2.2s infinite; }
+.tooth-card.c2 { bottom: 22%; left: -3rem; animation-delay: 0.3s; opacity: 0; animation: cardIn 0.6s ease forwards 1.9s, cardFloat 4s ease-in-out 2.5s infinite reverse; }
+@keyframes cardFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes cardIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+/* Scroll indicator */
+.hero-scroll {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  opacity: 0; animation: up 0.8s ease forwards 1.8s;
+}
+.hero-scroll span { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+.hero-scroll-mouse {
+  width: 22px; height: 34px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 11px;
+  display: flex; justify-content: center; padding-top: 6px;
+}
+.hero-scroll-dot {
+  width: 3px; height: 7px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 2px;
+  animation: scrollDown 2s ease-in-out infinite;
+}
+@keyframes scrollDown { 0%{transform:translateY(0);opacity:1} 100%{transform:translateY(10px);opacity:0} }
+
+@keyframes up { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+/* ── STRIP ── */
+.strip {
+  background: var(--blue-lt);
+  border-top: 1px solid var(--blue-mid);
+  border-bottom: 1px solid var(--blue-mid);
+  padding: 1.25rem 5vw;
+}
+.strip-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1.2rem;
+}
+.strip-item { display: flex; align-items: center; gap: 0.6rem; }
+.strip-icon { font-size: 1rem; }
+.strip-text { font-size: 0.78rem; font-weight: 500; color: var(--navy); }
+
+/* ── SECTIONS ── */
+.sec { padding: 7rem 5vw; }
+.sec-inner { max-width: 1100px; margin: 0 auto; }
+.sec-label {
+  font-size: 0.65rem; font-weight: 600;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 0.9rem;
+}
+.sec-title {
+  font-size: clamp(1.9rem, 3.5vw, 2.9rem);
+  font-weight: 700; letter-spacing: -0.02em;
+  line-height: 1.1; color: var(--navy);
+  margin-bottom: 1rem;
+}
+.sec-title em { font-style: normal; color: var(--teal); }
+.sec-body { font-size: 0.95rem; color: var(--gray); max-width: 520px; line-height: 1.85; }
+
+/* ── LEISTUNGEN ── */
+.leistungen-sec { background: var(--white); }
+.leistungen-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 3rem; align-items: end; margin-bottom: 4rem;
+}
+.leistungen-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.leistung-card {
+  background: var(--off);
+  border-radius: 16px;
+  padding: 2rem 1.8rem;
+  border: 1px solid transparent;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  cursor: default;
+}
+.leistung-card:hover {
+  border-color: var(--blue-mid);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(11,37,69,0.07);
+}
+.leistung-icon {
+  width: 48px; height: 48px;
+  background: var(--blue-lt);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 1.2rem;
+  transition: background 0.3s;
+}
+.leistung-card:hover .leistung-icon { background: var(--navy); }
+.leistung-name {
+  font-size: 1rem; font-weight: 600; color: var(--navy);
+  margin-bottom: 0.5rem; line-height: 1.3;
+}
+.leistung-desc { font-size: 0.83rem; color: var(--gray); line-height: 1.75; }
+.leistung-badge {
+  display: inline-block; margin-top: 1rem;
+  font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--teal);
+  background: rgba(26,143,191,0.08);
+  padding: 0.25rem 0.6rem; border-radius: 4px;
+}
+
+/* ── ABOUT / PRAXIS ── */
+.praxis-sec { background: var(--off); }
+.praxis-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6rem; align-items: center;
+}
+.praxis-visual {
+  background: var(--navy);
+  border-radius: 20px;
+  aspect-ratio: 4/3;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.praxis-visual-inner {
+  font-size: 5rem; opacity: 0.08;
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.praxis-stats {
+  position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+.praxis-stat {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 1rem;
+}
+.praxis-stat-val {
+  font-size: 1.5rem; font-weight: 700;
+  color: var(--white); line-height: 1;
+}
+.praxis-stat-val .c { color: #7DD3FC; }
+.praxis-stat-label { font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 0.25rem; }
+.praxis-quote {
+  border-left: 2px solid var(--teal);
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  font-size: 1.05rem;
+  font-style: italic; font-weight: 300;
+  color: var(--navy);
+  line-height: 1.65;
+}
+.praxis-features { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1.5rem; }
+.praxis-features li {
+  display: flex; align-items: center; gap: 0.8rem;
+  font-size: 0.88rem; color: var(--gray);
+}
+.praxis-features li::before {
+  content: '';
+  width: 18px; height: 18px; flex-shrink: 0;
+  background: var(--blue-lt);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L3.5 6.5L9 1' stroke='%231A8FBF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: center;
+}
+
+/* ── ANGSTPATIENTEN ── */
+.angst-sec {
+  background: var(--navy);
+  position: relative; overflow: hidden;
+}
+.angst-sec::before {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(125,211,252,0.08) 0%, transparent 70%);
+  top: -100px; right: -100px;
+  pointer-events: none;
+}
+.angst-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: center;
+  position: relative; z-index: 1;
+}
+.angst-sec .sec-label { color: #7DD3FC; }
+.angst-sec .sec-title { color: var(--white); }
+.angst-sec .sec-body { color: rgba(255,255,255,0.55); max-width: none; }
+.angst-steps { display: flex; flex-direction: column; gap: 1px; margin-top: 0; }
+.angst-step {
+  display: flex; gap: 1.5rem; align-items: flex-start;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  transition: background 0.3s;
+}
+.angst-step:hover { background: rgba(125,211,252,0.06); }
+.angst-step-nr {
+  font-size: 0.7rem; font-weight: 700;
+  color: #7DD3FC; letter-spacing: 0.08em;
+  background: rgba(125,211,252,0.12);
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  flex-shrink: 0; margin-top: 2px;
+}
+.angst-step-title { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-bottom: 0.3rem; }
+.angst-step-body { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
+
+/* Counter animation */
+.counter { display: inline-block; }
+
+/* ── ÖFFNUNGSZEITEN ── */
+.zeiten-sec { background: var(--white); }
+.zeiten-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: start;
+}
+.zeiten-table { margin-top: 2rem; }
+.zeiten-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--gray-lt);
+  font-size: 0.9rem;
+}
+.zeiten-row:first-child { border-top: 1px solid var(--gray-lt); }
+.zeiten-day { font-weight: 500; color: var(--navy); }
+.zeiten-time { color: var(--gray); }
+.zeiten-time.closed { color: var(--gray); opacity: 0.5; }
+.zeiten-note {
+  margin-top: 1rem;
+  padding: 1rem 1.2rem;
+  background: var(--blue-lt);
+  border-left: 3px solid var(--teal);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.8rem; color: var(--navy); line-height: 1.65;
+}
+
+.kontakt-cards { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+.kontakt-card {
+  display: flex; align-items: center; gap: 1rem;
+  background: var(--off);
+  border: 1px solid var(--gray-lt);
+  border-radius: 12px;
+  padding: 1.2rem 1.4rem;
+  text-decoration: none;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.kontakt-card:hover {
+  border-color: var(--blue-mid);
+  transform: translateX(4px);
+  box-shadow: 0 4px 16px rgba(11,37,69,0.07);
+}
+.kontakt-card-icon {
+  width: 42px; height: 42px; flex-shrink: 0;
+  background: var(--blue-lt);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+.kontakt-card-lbl { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
+.kontakt-card-val { font-size: 0.92rem; font-weight: 600; color: var(--navy); margin-top: 1px; }
+
+/* ── BEWERTUNGEN ── */
+.reviews-sec { background: var(--off); }
+.reviews-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem; margin-top: 3.5rem;
+}
+.review-card {
+  background: var(--white);
+  border: 1px solid var(--gray-lt);
+  border-radius: 16px;
+  padding: 1.8rem;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.review-card:hover { box-shadow: 0 8px 32px rgba(11,37,69,0.08); transform: translateY(-3px); }
+.review-stars { color: #FBBF24; font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 1rem; }
+.review-text { font-size: 0.86rem; color: var(--gray); line-height: 1.8; font-style: italic; margin-bottom: 1.2rem; }
+.review-author { font-size: 0.78rem; font-weight: 600; color: var(--navy); }
+
+/* ── CTA ── */
+.cta-sec {
+  background: var(--navy);
+  text-align: center;
+  padding: 7rem 5vw;
+  position: relative; overflow: hidden;
+}
+.cta-sec::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.cta-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+.cta-title {
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 700; letter-spacing: -0.02em;
+  color: var(--white); line-height: 1.1; margin-bottom: 1.2rem;
+}
+.cta-title span { color: #7DD3FC; }
+.cta-sub { font-size: 0.95rem; color: rgba(255,255,255,0.55); margin-bottom: 2.5rem; line-height: 1.8; }
+.cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  padding: 3.5rem 5vw 2rem;
+}
+.footer-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 4rem; margin-bottom: 2.5rem;
+}
+.footer-brand-name { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.3rem; }
+.footer-brand-sub { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1rem; }
+.footer-brand-desc { font-size: 0.8rem; color: rgba(255,255,255,0.4); line-height: 1.8; }
+.footer-col-title { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1rem; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+.footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.25s; }
+.footer-links a:hover { color: rgba(255,255,255,0.8); }
+.footer-contact-info { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 2; }
+.footer-contact-info a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.25s; }
+.footer-contact-info a:hover { color: rgba(255,255,255,0.8); }
+.footer-bottom {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 1.5rem;
+  font-size: 0.7rem; color: rgba(255,255,255,0.25);
+  flex-wrap: wrap; gap: 0.5rem;
+}
+.footer-legal { display: flex; gap: 1.5rem; }
+.footer-legal a { color: rgba(255,255,255,0.25); text-decoration: none; transition: color 0.25s; }
+.footer-legal a:hover { color: rgba(255,255,255,0.5); }
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  nav { padding: 1rem 5vw; }
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: rgba(255,255,255,0.98);
+    padding: 1.5rem 5vw; gap: 1.2rem;
+    box-shadow: 0 4px 20px rgba(11,37,69,0.1);
+    border-bottom: 1px solid var(--gray-lt);
+  }
+  .nav-links.open a { color: var(--navy); }
+  .nav-hamburger { display: flex; }
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-right { display: none; }
+  .hero-left { padding: 7rem 5vw 4rem; }
+  .leistungen-header, .praxis-grid, .angst-grid, .zeiten-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .leistungen-grid, .reviews-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; }
+  .strip-inner { justify-content: center; }
+  .sec { padding: 5rem 5vw; }
+  .praxis-stats { position: static; margin-top: 1rem; display: flex; flex-wrap: wrap; }
+}
+@media (max-width: 600px) {
+  .hero-title { font-size: 2.6rem; }
+  .hero-actions { flex-direction: column; }
+  .cta-actions { flex-direction: column; align-items: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-name">Dr. med. dent. Dana Alexandru</span>
+    <span class="nav-logo-title">Zahnärztin · Traun</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#leistungen">Leistungen</a></li>
+    <li><a href="#praxis">Praxis</a></li>
+    <li><a href="#angst">Angstpatienten</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+    <li><a href="tel:+43722961999" class="nav-tel">+43 7229 61999</a></li>
+  </ul>
+  <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-kasse">
+      <div class="hero-kasse-dot"></div>
+      <span>Alle Kassen &amp; Privat · Traun</span>
+    </div>
+    <h1 class="hero-title">
+      Ihr Lächeln<br>in <span class="hl">besten Händen.</span>
+    </h1>
+    <p class="hero-sub">Professionelle Zahnmedizin in entspannter Atmosphäre — für Patienten aller Altersgruppen. Angstpatienten herzlich willkommen.</p>
+    <div class="hero-actions">
+      <a href="tel:+43722961999" class="btn-white">
+        <span>Termin vereinbaren</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 8H15M8 1L15 8L8 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#leistungen" class="btn-ghost-wt">Leistungen ansehen</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="tooth-wrap">
+      <!-- Animated Tooth SVG -->
+      <svg class="tooth-svg" viewBox="0 0 300 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Tooth body filled -->
+        <path d="M150 20 C110 20, 60 50, 50 100 C38 155, 42 200, 55 240 C65 270, 75 310, 85 350 C90 365, 100 375, 115 370 C130 365, 135 340, 140 315 C143 300, 147 285, 150 285 C153 285, 157 300, 160 315 C165 340, 170 365, 185 370 C200 375, 210 365, 215 350 C225 310, 235 270, 245 240 C258 200, 262 155, 250 100 C240 50, 190 20, 150 20Z"
+          fill="rgba(255,255,255,0.06)"/>
+        <!-- Tooth outline animated -->
+        <path class="tooth-path" d="M150 20 C110 20, 60 50, 50 100 C38 155, 42 200, 55 240 C65 270, 75 310, 85 350 C90 365, 100 375, 115 370 C130 365, 135 340, 140 315 C143 300, 147 285, 150 285 C153 285, 157 300, 160 315 C165 340, 170 365, 185 370 C200 375, 210 365, 215 350 C225 310, 235 270, 245 240 C258 200, 262 155, 250 100 C240 50, 190 20, 150 20Z"
+          stroke="#7DD3FC" stroke-width="1.5" fill="none"/>
+        <!-- Crown highlights -->
+        <path d="M95 80 C100 60, 120 45, 150 42" stroke="rgba(125,211,252,0.4)" stroke-width="1" fill="none"/>
+        <path d="M110 200 C130 195, 170 195, 190 200" stroke="rgba(125,211,252,0.25)" stroke-width="1" fill="none"/>
+        <!-- Sparkle dots -->
+        <circle cx="220" cy="70" r="2.5" fill="#7DD3FC" opacity="0.6"/>
+        <circle cx="240" cy="120" r="1.5" fill="#7DD3FC" opacity="0.4"/>
+        <circle cx="80" cy="90" r="2" fill="#7DD3FC" opacity="0.5"/>
+        <circle cx="75" cy="150" r="1.5" fill="white" opacity="0.3"/>
+        <!-- Center line suggesting roots -->
+        <line x1="150" y1="285" x2="150" y2="340" stroke="rgba(125,211,252,0.15)" stroke-width="1"/>
+      </svg>
+
+      <!-- Info cards -->
+      <div class="tooth-card c1">
+        <div class="tooth-card-val">Alle Kassen</div>
+        <div class="tooth-card-label">Kassenarzt & Privat</div>
+      </div>
+      <div class="tooth-card c2">
+        <div class="tooth-card-val">4050 Traun</div>
+        <div class="tooth-card-label">Weidfeldstraße 51</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Scrollen</span>
+    <div class="hero-scroll-mouse"><div class="hero-scroll-dot"></div></div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-inner">
+    <div class="strip-item"><span class="strip-icon">✓</span><span class="strip-text">Alle Kassen & Privat</span></div>
+    <div class="strip-item"><span class="strip-icon">❤️</span><span class="strip-text">Angstpatienten willkommen</span></div>
+    <div class="strip-item"><span class="strip-icon">📅</span><span class="strip-text">Termine nach Vereinbarung</span></div>
+    <div class="strip-item"><span class="strip-icon">🏡</span><span class="strip-text">Hausbesuche möglich</span></div>
+    <div class="strip-item"><span class="strip-icon">📍</span><span class="strip-text">Weidfeldstraße 51, Traun</span></div>
+  </div>
+</div>
+
+<!-- LEISTUNGEN -->
+<section id="leistungen" class="sec leistungen-sec">
+  <div class="sec-inner">
+    <div class="leistungen-header">
+      <div class="reveal">
+        <p class="sec-label">Leistungen</p>
+        <h2 class="sec-title">Umfassende Zahnmedizin <em>für Sie</em></h2>
+      </div>
+      <div class="reveal" style="transition-delay:0.1s;">
+        <p class="sec-body">Von der Vorsorge bis zur Ästhetik — wir bieten das gesamte Spektrum moderner Zahnmedizin unter einem Dach.</p>
+      </div>
+    </div>
+    <div class="leistungen-grid">
+      <div class="leistung-card reveal">
+        <div class="leistung-icon">🦷</div>
+        <div class="leistung-name">Prophylaxe & Mundhygiene</div>
+        <div class="leistung-desc">Professionelle Zahnreinigung, Kariesprophylaxe und individuelle Hygieneinstruktion für langfristig gesunde Zähne.</div>
+        <span class="leistung-badge">Vorsorge</span>
+      </div>
+      <div class="leistung-card reveal" style="transition-delay:0.07s;">
+        <div class="leistung-icon">👑</div>
+        <div class="leistung-name">Kronen & Brücken</div>
+        <div class="leistung-desc">Hochwertiger Zahnersatz aus modernen Materialien — ästhetisch, langlebig und perfekt angepasst.</div>
+        <span class="leistung-badge">Zahnersatz</span>
+      </div>
+      <div class="leistung-card reveal" style="transition-delay:0.14s;">
+        <div class="leistung-icon">🔩</div>
+        <div class="leistung-name">Zahnimplantate</div>
+        <div class="leistung-desc">Titan- oder Keramikimplantate (metallfrei) in Kooperation mit erfahrenen Implantologen — dauerhafter Zahnersatz.</div>
+        <span class="leistung-badge">Implantologie</span>
+      </div>
+      <div class="leistung-card reveal">
+        <div class="leistung-icon">😁</div>
+        <div class="leistung-name">Unsichtbare Zahnspangen</div>
+        <div class="leistung-desc">Diskrete Aligner-Therapie für gerade Zähne — ohne Brackets, ohne Metallspangen, für Kinder und Erwachsene.</div>
+        <span class="leistung-badge">Kieferorthopädie</span>
+      </div>
+      <div class="leistung-card reveal" style="transition-delay:0.07s;">
+        <div class="leistung-icon">🦷</div>
+        <div class="leistung-name">Zahnprothesen</div>
+        <div class="leistung-desc">Herausnehmbarer und festsitzender Zahnersatz. Nach nur einer Behandlung sitzt die Prothese — kein Wackeln mehr.</div>
+        <span class="leistung-badge">Prothetik</span>
+      </div>
+      <div class="leistung-card reveal" style="transition-delay:0.14s;">
+        <div class="leistung-icon">✨</div>
+        <div class="leistung-name">Ästhetische Zahnmedizin</div>
+        <div class="leistung-desc">Bleaching, Veneers, Composite-Aufbau — für ein strahlendes Lächeln, das Ihre Persönlichkeit unterstreicht.</div>
+        <span class="leistung-badge">Ästhetik</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRAXIS -->
+<section id="praxis" class="sec praxis-sec">
+  <div class="sec-inner">
+    <div class="praxis-grid">
+      <div class="praxis-visual reveal">
+        <div class="praxis-visual-inner">🦷</div>
+        <div class="praxis-stats">
+          <div class="praxis-stat">
+            <div class="praxis-stat-val"><span class="counter" data-target="100">0</span><span class="c">%</span></div>
+            <div class="praxis-stat-label">Alle Kassen</div>
+          </div>
+          <div class="praxis-stat">
+            <div class="praxis-stat-val"><span class="counter" data-target="24">0</span><span class="c">h</span></div>
+            <div class="praxis-stat-label">Reaktionszeit</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.15s;">
+        <p class="sec-label">Über die Praxis</p>
+        <h2 class="sec-title">Wohlfühlen beim <em>Zahnarzt</em></h2>
+        <div class="praxis-quote">"Uns ist es wichtig, dass der Zahnarztbesuch Ihnen in guter Erinnerung bleibt."<br><small style="font-size:0.8rem; color: var(--gray); font-style:normal;">— Dr. Dana Alexandru</small></div>
+        <p class="sec-body">Helle, freundliche Behandlungsräume mit angenehmer Atmosphäre. Sanfte Musikuntermalung. Ein Team, das sich wirklich Zeit für Sie nimmt.</p>
+        <ul class="praxis-features">
+          <li>Entspannte Atmosphäre für alle Patienten</li>
+          <li>Angstpatienten werden besonders betreut</li>
+          <li>Hausbesuche im Altersheim Traun</li>
+          <li>Persönliche Beratung ohne Zeitdruck</li>
+          <li>Modernste Behandlungsgeräte</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANGSTPATIENTEN -->
+<section id="angst" class="sec angst-sec">
+  <div class="sec-inner">
+    <div class="angst-grid">
+      <div class="reveal">
+        <p class="sec-label">Angstpatienten</p>
+        <h2 class="sec-title" style="color:var(--white);">Kein Stress.<br><em style="color:#7DD3FC;">Wirklich.</em></h2>
+        <p class="sec-body" style="margin-top:1rem;">Viele Menschen fürchten den Zahnarzt. Bei uns sind Sie in sicheren Händen — wir gehen in Ihrem Tempo vor, erklären jeden Schritt und sorgen dafür, dass Sie sich wohlfühlen.</p>
+        <div style="margin-top:2rem;">
+          <a href="tel:+43722961999" class="btn-white">Jetzt anrufen</a>
+        </div>
+      </div>
+      <div class="angst-steps reveal" style="transition-delay:0.15s;">
+        <div class="angst-step">
+          <div class="angst-step-nr">01</div>
+          <div>
+            <div class="angst-step-title">Erstes Gespräch</div>
+            <div class="angst-step-body">Wir hören zu, nehmen Ihre Ängste ernst und planen die Behandlung gemeinsam mit Ihnen.</div>
+          </div>
+        </div>
+        <div class="angst-step">
+          <div class="angst-step-nr">02</div>
+          <div>
+            <div class="angst-step-title">Sanfte Behandlung</div>
+            <div class="angst-step-body">Kein Druck, kein Stress. Pausen jederzeit möglich. Wir gehen in Ihrem Tempo vor.</div>
+          </div>
+        </div>
+        <div class="angst-step">
+          <div class="angst-step-nr">03</div>
+          <div>
+            <div class="angst-step-title">Schmerzfreie Anästhesie</div>
+            <div class="angst-step-body">Modernste Betäubungstechniken für maximalen Komfort — Sie spüren so wenig wie möglich.</div>
+          </div>
+        </div>
+        <div class="angst-step">
+          <div class="angst-step-nr">04</div>
+          <div>
+            <div class="angst-step-title">Entspannte Nachsorge</div>
+            <div class="angst-step-body">Nach der Behandlung nehmen wir uns Zeit für Sie — bis Sie sich bereit fühlen zu gehen.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEWERTUNGEN -->
+<section class="sec reviews-sec">
+  <div class="sec-inner">
+    <div class="reveal">
+      <p class="sec-label">Patientenstimmen</p>
+      <h2 class="sec-title">Was Patienten <em>sagen</em></h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card reveal">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Fr. Alexandru hat mich als Angstpatienten total ernst genommen. Ich hab mich sehr wohl gefühlt — wenn man das bei einem Zahnarzt sagen kann — und kann sie nur empfehlen."</div>
+        <div class="review-author">Patient aus Traun</div>
+      </div>
+      <div class="review-card reveal" style="transition-delay:0.08s;">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Heute wegen meiner Weisheitszähne hier — sofort Röntgen, kurze Beratung, schnelle Behandlung. Sehr zufrieden, mache sehr gerne eine Weiterempfehlung."</div>
+        <div class="review-author">Patient aus Linz</div>
+      </div>
+      <div class="review-card reveal" style="transition-delay:0.16s;">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Sehr gute Beratung, faire Preise und ein wirklich herzliches Team. Die Terminabstimmung funktioniert hervorragend. Hier ist man in den besten Händen."</div>
+        <div class="review-author">Patientin aus Traun</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ÖFFNUNGSZEITEN & KONTAKT -->
+<section id="kontakt" class="sec zeiten-sec">
+  <div class="sec-inner">
+    <div class="zeiten-grid">
+      <div class="reveal">
+        <p class="sec-label">Öffnungszeiten</p>
+        <h2 class="sec-title">Wann wir <em>für Sie da</em> sind</h2>
+        <div class="zeiten-table">
+          <div class="zeiten-row"><span class="zeiten-day">Montag</span><span class="zeiten-time">08:00 – 12:00 &amp; 14:00 – 17:00</span></div>
+          <div class="zeiten-row"><span class="zeiten-day">Dienstag</span><span class="zeiten-time">08:00 – 12:00</span></div>
+          <div class="zeiten-row"><span class="zeiten-day">Mittwoch</span><span class="zeiten-time">08:00 – 12:00</span></div>
+          <div class="zeiten-row"><span class="zeiten-day">Donnerstag</span><span class="zeiten-time">08:00 – 12:00 &amp; 14:00 – 17:00</span></div>
+          <div class="zeiten-row"><span class="zeiten-day">Freitag</span><span class="zeiten-time">08:00 – 12:00</span></div>
+          <div class="zeiten-row"><span class="zeiten-day">Samstag</span><span class="zeiten-time closed">Geschlossen</span></div>
+          <div class="zeiten-row"><span class="zeiten-day">Sonntag</span><span class="zeiten-time closed">Geschlossen</span></div>
+        </div>
+        <div class="zeiten-note">
+          Termine ausschließlich nach telefonischer Vereinbarung.<br>
+          Wir nehmen uns Zeit für Sie — auch für längere Beratungen.
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.12s;">
+        <p class="sec-label">Kontakt</p>
+        <h2 class="sec-title">So erreichen <em>Sie uns</em></h2>
+        <div class="kontakt-cards">
+          <a href="tel:+43722961999" class="kontakt-card">
+            <div class="kontakt-card-icon">📞</div>
+            <div><div class="kontakt-card-lbl">Telefon</div><div class="kontakt-card-val">+43 7229 61999</div></div>
+          </a>
+          <a href="mailto:dr.alexandru-dana@medway.at" class="kontakt-card">
+            <div class="kontakt-card-icon">✉️</div>
+            <div><div class="kontakt-card-lbl">E-Mail</div><div class="kontakt-card-val">dr.alexandru-dana@medway.at</div></div>
+          </a>
+          <div class="kontakt-card" style="cursor:default;">
+            <div class="kontakt-card-icon">📍</div>
+            <div><div class="kontakt-card-lbl">Adresse</div><div class="kontakt-card-val">Weidfeldstraße 51, 4050 Traun</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec">
+  <div class="cta-inner reveal">
+    <h2 class="cta-title">Ihr nächster Termin<br><span>wartet auf Sie.</span></h2>
+    <p class="cta-sub">Rufen Sie uns an oder schreiben Sie eine E-Mail — wir finden einen Termin, der zu Ihnen passt.</p>
+    <div class="cta-actions">
+      <a href="tel:+43722961999" class="btn-white">
+        📞 +43 7229 61999
+      </a>
+      <a href="mailto:dr.alexandru-dana@medway.at" class="btn-ghost-wt">E-Mail schreiben</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand-name">Dr. med. dent. Dana Alexandru</div>
+      <div class="footer-brand-sub">Zahnärztin in Traun</div>
+      <p class="footer-brand-desc">Professionelle Zahnmedizin für die ganze Familie. Alle Kassen und Privat. Angstpatienten herzlich willkommen.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigation</div>
+      <ul class="footer-links">
+        <li><a href="#leistungen">Leistungen</a></li>
+        <li><a href="#praxis">Über die Praxis</a></li>
+        <li><a href="#angst">Angstpatienten</a></li>
+        <li><a href="#kontakt">Kontakt & Zeiten</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Kontakt</div>
+      <div class="footer-contact-info">
+        Weidfeldstraße 51<br>
+        4050 Traun<br>
+        <a href="tel:+43722961999">+43 7229 61999</a><br>
+        <a href="mailto:dr.alexandru-dana@medway.at">dr.alexandru-dana@medway.at</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Dr. med. dent. Dana Alexandru · Zahnarztpraxis Traun</span>
+    <div class="footer-legal">
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // Reveal
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Counter animation
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target);
+    const duration = 1800;
+    const start = performance.now();
+    function step(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(ease * target);
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.counter').forEach(animateCounter);
+        counterObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.praxis-visual').forEach(el => counterObserver.observe(el));
+</script>
+</body>
+</html>
